@@ -218,14 +218,17 @@ public class GameInteraction : MonoBehaviour
 
         foreach (GameLogic.Place place in GameLogic.Instance.places)
         {
+            int pieceCountInPlace = place.pieces.Count;
+            int currentPiece = 0;
             foreach (GameLogic.Piece piece in place.pieces)
             {
+                Vector3 offset = Vector3.back * currentPiece;
                 if (piece.type == GameLogic.PieceType.Soldier)
                 {
                     if (piece.owner == GameLogic.PieceOwner.P1)
                     {
                         p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
-                        p1Soldiers[p1soldierIndex].transform.position = GetScaledBoardPosition(place.x, place.y);
+                        p1Soldiers[p1soldierIndex].transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p1Soldiers[p1soldierIndex].SetActive(true);
                         p1Soldiers[p1soldierIndex].name = piece.placeIndex.ToString();
                         p1Soldiers[p1soldierIndex].GetComponent<PieceData>().pieceInfo = piece;
@@ -234,7 +237,7 @@ public class GameInteraction : MonoBehaviour
                     else
                     {
                         p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
-                        p2Soldiers[p2soldierIndex].transform.position = GetScaledBoardPosition(place.x, place.y);
+                        p2Soldiers[p2soldierIndex].transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p2Soldiers[p2soldierIndex].SetActive(true);
                         p2Soldiers[p2soldierIndex].name = piece.placeIndex.ToString();
                         p2Soldiers[p2soldierIndex].GetComponent<PieceData>().pieceInfo = piece;
@@ -246,7 +249,7 @@ public class GameInteraction : MonoBehaviour
                     if (piece.owner == GameLogic.PieceOwner.P1)
                     {
                         p1queen.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
-                        p1queen.transform.position = GetScaledBoardPosition(place.x, place.y);
+                        p1queen.transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p1queen.name = piece.placeIndex.ToString();
                         p1queen.GetComponent<PieceData>().pieceInfo = piece;
                         p1queen.SetActive(true);
@@ -254,7 +257,7 @@ public class GameInteraction : MonoBehaviour
                     else
                     {
                         p2queen.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
-                        p2queen.transform.position = GetScaledBoardPosition(place.x, place.y);
+                        p2queen.transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p2queen.name = piece.placeIndex.ToString();
                         p2queen.GetComponent<PieceData>().pieceInfo = piece;
                         p2queen.SetActive(true);
@@ -263,39 +266,38 @@ public class GameInteraction : MonoBehaviour
                 else if (piece.type == GameLogic.PieceType.King)
                 {
                     king.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
-                    king.transform.position = GetScaledBoardPosition(place.x, place.y);
+                    king.transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                     king.name = piece.placeIndex.ToString();
                     king.GetComponent<PieceData>().pieceInfo = piece;
                     king.SetActive(true);
                     king.layer = LayerMask.NameToLayer(piece.owner == GameLogic.PieceOwner.P1 ? "P1" : "P2");
                 }
+                currentPiece++;
             }
         }
 
         for(int i = 0; i < GameLogic.Instance.p2captures; ++i)
         {
-            p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
-            p1Soldiers[p1soldierIndex].transform.position = p2capturesPos.transform.position + Vector3.right * i;
-            p1Soldiers[p1soldierIndex].SetActive(true);
-            p1Soldiers[p1soldierIndex].name = "captured";
-            p1soldierIndex++;
+            if (p1soldierIndex < p1Soldiers.Count)
+            {
+                p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
+                p1Soldiers[p1soldierIndex].transform.position = p2capturesPos.transform.position + Vector3.right * i;
+                p1Soldiers[p1soldierIndex].SetActive(true);
+                p1Soldiers[p1soldierIndex].name = "captured";
+                p1soldierIndex++;
+            }
         }
 
         for (int i = 0; i < GameLogic.Instance.p1captures; ++i)
         {
-            p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
-            p2Soldiers[p2soldierIndex].transform.position = p1capturesPos.transform.position - Vector3.right * i;
-            p2Soldiers[p2soldierIndex].SetActive(true);
-            p2Soldiers[p2soldierIndex].name = "captured";
-            p2soldierIndex++;
-        }
-
-        List<GameLogic.Piece> potentialPieces = GameLogic.Instance.GetAllPotentialPieces();
-        foreach (GameLogic.Piece piece in potentialPieces)
-        {
-            int i = 0;
-            // TODO: Show potential places from selected piece
-            //places[piece.allowedPlaces[i]].transform.GetChild(0).gameObject.SetActive(true);
+            if (p2soldierIndex < p2Soldiers.Count)
+            {
+                p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
+                p2Soldiers[p2soldierIndex].transform.position = p1capturesPos.transform.position - Vector3.right * i;
+                p2Soldiers[p2soldierIndex].SetActive(true);
+                p2Soldiers[p2soldierIndex].name = "captured";
+                p2soldierIndex++;
+            }
         }
     }
 

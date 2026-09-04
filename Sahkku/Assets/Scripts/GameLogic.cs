@@ -82,6 +82,7 @@ public class GameLogic : MonoBehaviour
         P2move
     }
 
+    public bool keyboardDebug = true;
     public List<Place> places;
     public List<D4> dice;
     public TurnPhase turnPhase;
@@ -119,7 +120,7 @@ public class GameLogic : MonoBehaviour
             aiCanAct = true;
         }
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame || tryRollDice || (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2 && aiCanAct))
+        if ((Keyboard.current.spaceKey.wasPressedThisFrame && keyboardDebug) || tryRollDice || (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2 && aiCanAct))
         {
             tryRollDice = false;
 
@@ -145,16 +146,19 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        if (Keyboard.current.digit1Key.wasPressedThisFrame) playerPieceIndex = 0;
-        if (Keyboard.current.digit2Key.wasPressedThisFrame) playerPieceIndex = 1;
-        if (Keyboard.current.digit3Key.wasPressedThisFrame) playerPieceIndex = 2;
-        if (Keyboard.current.digit4Key.wasPressedThisFrame) playerPieceIndex = 3;
-        if (Keyboard.current.digit5Key.wasPressedThisFrame) playerPieceIndex = 4;
-        if (Keyboard.current.digit6Key.wasPressedThisFrame) playerPieceIndex = 5;
-        if (Keyboard.current.digit7Key.wasPressedThisFrame) playerPieceIndex = 6;
-        if (Keyboard.current.digit8Key.wasPressedThisFrame) playerPieceIndex = 7;
+        if (keyboardDebug)
+        {
+            if (Keyboard.current.digit1Key.wasPressedThisFrame) playerPieceIndex = 0;
+            if (Keyboard.current.digit2Key.wasPressedThisFrame) playerPieceIndex = 1;
+            if (Keyboard.current.digit3Key.wasPressedThisFrame) playerPieceIndex = 2;
+            if (Keyboard.current.digit4Key.wasPressedThisFrame) playerPieceIndex = 3;
+            if (Keyboard.current.digit5Key.wasPressedThisFrame) playerPieceIndex = 4;
+            if (Keyboard.current.digit6Key.wasPressedThisFrame) playerPieceIndex = 5;
+            if (Keyboard.current.digit7Key.wasPressedThisFrame) playerPieceIndex = 6;
+            if (Keyboard.current.digit8Key.wasPressedThisFrame) playerPieceIndex = 7;
+        }
 
-        if (Keyboard.current.enterKey.wasPressedThisFrame || (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2 && aiCanAct))
+        if ((Keyboard.current.enterKey.wasPressedThisFrame && keyboardDebug) || (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2 && aiCanAct))
         {
             if (turnPhase == TurnPhase.P1move || turnPhase == TurnPhase.P2move)
             {
@@ -600,78 +604,69 @@ public class GameLogic : MonoBehaviour
         List<int> pieceIndiciesToRemove = new List<int>();
         for(int i = 0; i < places[placeIndex].pieces.Count; ++i)
         {
-            if (places[placeIndex].pieces[i].owner == GetCurrentPlayer())
+            if (places[placeIndex].pieces[i].type == PieceType.Soldier)
             {
+                Debug.Log("Captered a piece!");
+                pieceIndiciesToRemove.Add(i);
 
+                if (GetCurrentPlayer() == PieceOwner.P1)
+                {
+                    p1captures++;
+                    Debug.Log("P1 captures: " + p1captures);
+                }
+                else
+                {
+                    p2captures++;
+                    Debug.Log("P2 captures: " + p2captures);
+                }
+
+                if (p1captures == BOARD_SIZE_X)
+                {
+                    Debug.Log("Game over!");
+                    Debug.Log("P1 WON!");
+                    winner = GameSettings.Player.One;
+                }
+                else if (p2captures == BOARD_SIZE_X)
+                {
+                    Debug.Log("Game over!");
+                    Debug.Log("P2 WON!");
+                    winner = GameSettings.Player.Two;
+                }
             }
-            else
-            { 
-                if (places[placeIndex].pieces[i].type == PieceType.Soldier)
+            else if (places[placeIndex].pieces[i].type == PieceType.King)
+            {
+                Debug.Log("Captered the king!");
+                places[placeIndex].pieces[i].owner = GetCurrentPlayer();
+            }
+            else if (places[placeIndex].pieces[i].type == PieceType.Queen)
+            {
+                Debug.Log("Captered the queen!");
+                pieceIndiciesToRemove.Add(i);
+                gameOver = true;
+
+                if (GetCurrentPlayer() == PieceOwner.P1)
                 {
-                    Debug.Log("Captered a piece!");
-                    pieceIndiciesToRemove.Add(i);
-
-                    if (GetCurrentPlayer() == PieceOwner.P1)
-                    {
-                        p1captures++;
-                        Debug.Log("P1 captures: " + p1captures);
-                    }
-                    else
-                    {
-                        p2captures++;
-                        Debug.Log("P2 captures: " + p2captures);
-                    }
-
-                    if (p1captures == BOARD_SIZE_X)
-                    {
-                        Debug.Log("Game over!");
-                        Debug.Log("P1 WON!");
-                        winner = GameSettings.Player.One;
-                    }
-                    else if (p2captures == BOARD_SIZE_X)
-                    {
-                        Debug.Log("Game over!");
-                        Debug.Log("P2 WON!");
-                        winner = GameSettings.Player.Two;
-                    }
+                    Debug.Log("Game over!");
+                    Debug.Log("P1 WON!");
+                    winner = GameSettings.Player.One;
                 }
-                else if (places[placeIndex].pieces[i].type == PieceType.King)
+                else
                 {
-                    Debug.Log("Captered the king!");
-                    places[placeIndex].pieces[i].owner = GetCurrentPlayer();
-                }
-                else if (places[placeIndex].pieces[i].type == PieceType.Queen)
-                {
-                    Debug.Log("Captered the queen!");
-                    pieceIndiciesToRemove.Add(i);
-                    gameOver = true;
-
-                    if (GetCurrentPlayer() == PieceOwner.P1)
-                    {
-                        Debug.Log("Game over!");
-                        Debug.Log("P1 WON!");
-                        winner = GameSettings.Player.One;
-                    }
-                    else
-                    {
-                        Debug.Log("Game over!");
-                        Debug.Log("P2 WON!");
-                        winner = GameSettings.Player.Two;
-                    }
+                    Debug.Log("Game over!");
+                    Debug.Log("P2 WON!");
+                    winner = GameSettings.Player.Two;
                 }
             }
         }
 
-        // Remove all captured pieces
-        int offset = 0;
         for (int i = pieceIndiciesToRemove.Count - 1; i >= 0; --i)
         {
-            places[placeIndex].pieces.RemoveAt(pieceIndiciesToRemove[i + offset]);
-            offset--;
+            int index = pieceIndiciesToRemove[i];
+            places[placeIndex].pieces.RemoveAt(index);
         }
 
         // Activate next soldier, if possible
-        if(!piece.isActive && piece.type == PieceType.Soldier)
+        if (!piece.isActive && piece.type == PieceType.Soldier)
         {
             int nextSoldierIndex = piece.placeIndex + (GetCurrentPlayer() == PieceOwner.P1 ? -1 : 1);
 
