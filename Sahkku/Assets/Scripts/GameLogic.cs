@@ -90,6 +90,7 @@ public class GameLogic : MonoBehaviour
     float aiTimer = 0.0f;
     float aiSpeed = 0.33f;
     bool aiCanAct = false;
+    int playerPieceIndex = 0;
 
     void Start()
     {
@@ -133,10 +134,30 @@ public class GameLogic : MonoBehaviour
             }
         }
 
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) playerPieceIndex = 0;
+        if (Keyboard.current.digit2Key.wasPressedThisFrame) playerPieceIndex = 1;
+        if (Keyboard.current.digit3Key.wasPressedThisFrame) playerPieceIndex = 2;
+        if (Keyboard.current.digit4Key.wasPressedThisFrame) playerPieceIndex = 3;
+        if (Keyboard.current.digit5Key.wasPressedThisFrame) playerPieceIndex = 4;
+        if (Keyboard.current.digit6Key.wasPressedThisFrame) playerPieceIndex = 5;
+        if (Keyboard.current.digit7Key.wasPressedThisFrame) playerPieceIndex = 6;
+        if (Keyboard.current.digit8Key.wasPressedThisFrame) playerPieceIndex = 7;
+
         if (Keyboard.current.enterKey.wasPressedThisFrame || (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2 && aiCanAct))
         {
             if (turnPhase == TurnPhase.P1move || turnPhase == TurnPhase.P2move)
             {
+                List<Piece> potentialPieces = GetAllPotentialPieces();
+
+                // Move selected piece to random direction
+                int pieceIndex = Mathf.Clamp(playerPieceIndex, 0, potentialPieces.Count - 1); ;
+
+                // Randomize ai piece selection
+                if (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2)
+                {
+                    pieceIndex = UnityEngine.Random.Range(0, potentialPieces.Count);
+                }
+
                 bool pieceMoved = false;
                 foreach(Place place in places)
                 {
@@ -144,8 +165,11 @@ public class GameLogic : MonoBehaviour
                     {
                         if(piece.allowedPlaces.Count > 0)
                         {
-                            MovePiece(piece, UnityEngine.Random.Range(0, 4));
-                            pieceMoved = true;
+                            if (piece == potentialPieces[pieceIndex])
+                            {
+                                MovePiece(piece, UnityEngine.Random.Range(0, 4));
+                                pieceMoved = true;
+                            }
                         }
 
                         if (pieceMoved) break;
@@ -480,37 +504,70 @@ public class GameLogic : MonoBehaviour
 
         if(p.isActive || (p.canBeActivated && GetCurrentDice() == D4.Sahhku))
         {
-            Debug.Log("Found potential piece");
+            
+            Debug.Log("Found potential piece " + p.type + "(" + p.placeIndex + ")");
 
+            // All pieces can try to move forward
             int indexTarget = p.placeIndex + direction;
             //Debug.Log(p.placeIndex + "+" + direction);
             //Debug.Log(indexTarget + "<" + places.Count + "&&" + indexTarget + ">=0"); 
             if (indexTarget < places.Count && indexTarget >= 0)
             {
-                if (places[indexTarget].pieces.Count == 0)
-                {
-                    Debug.Log("Allowed to move to an empty place");
-                    allowedPlaces.Add(indexTarget);
-                }
-                else if (places[indexTarget].pieces[0].isActive
-                    && !(places[indexTarget].pieces[0].type == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer()))
-                {
-                    Debug.Log("Allowed to move to an occupied place");
-                    allowedPlaces.Add(indexTarget);
-                }
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
             }
-        }
-        else
-        {
 
+            // Queens and kings can move to any direction
+            if(p.type != PieceType.Soldier)
+            {
+                direction = -direction;
+                indexTarget = p.placeIndex + direction;
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
+
+                indexTarget = GetPlaceIndexFromCoordinates(places[p.placeIndex].x, places[p.placeIndex].y + movementAmount);
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
+
+                indexTarget = GetPlaceIndexFromCoordinates(places[p.placeIndex].x, places[p.placeIndex].y - movementAmount);
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
+            }
         }
 
         return allowedPlaces;
     }
 
-    bool CanPieceMove(Piece p)
+    void TryAddAllowedPlace(int indexTarget, ref List<int> allowedPlaces)
     {
-        return p.allowedPlaces.Count > 0;
+        if(indexTarget < 0 || indexTarget > places.Count - 1)
+            return;
+
+        if (places[indexTarget].pieces.Count == 0)
+        {
+            Debug.Log("Allowed to move to an empty place " + indexTarget);
+            allowedPlaces.Add(indexTarget);
+        }
+        else if (places[indexTarget].pieces[0].isActive
+            && !(places[indexTarget].pieces[0].type == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer()))
+        {
+            Debug.Log("Allowed to move to an occupied place " + indexTarget);
+            allowedPlaces.Add(indexTarget);
+        }
+    }
+
+    List<Piece> GetAllPotentialPieces()
+    {
+        List<Piece> potentialPieces = new List<Piece>();
+
+        foreach (Place place in places)
+        {
+            foreach (Piece piece in place.pieces)
+            {
+                if (piece.IsSelectable())
+                {
+                    potentialPieces.Add(piece);
+                }
+            }
+        }
+
+        return potentialPieces;
     }
 
     // Returns -1 when unsuccessful
