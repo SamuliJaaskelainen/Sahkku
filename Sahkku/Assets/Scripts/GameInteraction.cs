@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameInteraction : MonoBehaviour
 {
@@ -69,12 +70,7 @@ public class GameInteraction : MonoBehaviour
     {
         if(Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            // TODO: Open menu
-        }
-
-        if(Keyboard.current.dKey.wasPressedThisFrame)   
-        {
-            
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
