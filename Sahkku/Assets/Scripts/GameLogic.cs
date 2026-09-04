@@ -81,9 +81,9 @@ public class GameLogic : MonoBehaviour
     }
 
     List<Place> places;
-    List<D4> die;
+    List<D4> dice;
     TurnPhase turnPhase;
-    int currentActiveDice;
+    int currentActiveDie;
     bool gameOver;
     int p1captures;
     int p2captures;
@@ -120,7 +120,7 @@ public class GameLogic : MonoBehaviour
             {
                 ThrowAllDie();
                 OrderDie();
-                currentActiveDice = 0;
+                currentActiveDie = 0;
 
                 if(turnPhase == TurnPhase.P1roll || turnPhase == TurnPhase.P2roll)
                 {
@@ -180,7 +180,7 @@ public class GameLogic : MonoBehaviour
                 if(!pieceMoved)
                 {
                     Debug.Log("No piece to move, continue to next turn");
-                    currentActiveDice = die.Count;
+                    currentActiveDie = dice.Count;
                 }
 
                 if(gameOver)
@@ -188,8 +188,8 @@ public class GameLogic : MonoBehaviour
                     return;
                 }
 
-                currentActiveDice++;
-                if (currentActiveDice >= die.Count)
+                currentActiveDie++;
+                if (currentActiveDie >= dice.Count)
                 {
                     NextPlayerTurn();
                 }
@@ -208,7 +208,7 @@ public class GameLogic : MonoBehaviour
     void NextPlayerTurn()
     {
         ClearAllAllowedPlaces();
-        currentActiveDice = 0;
+        currentActiveDie = 0;
 
         if (GetCurrentPlayer() == PieceOwner.P2)
         {
@@ -317,10 +317,10 @@ public class GameLogic : MonoBehaviour
         places[GetPlaceIndexFromCoordinates(BOARD_QUEEN_DISTANCE - 1, 1)].pieces[0].canBeActivated = true;
 
         // Initialize die
-        die = new List<D4>();
-        die.Add(D4.Zero);
-        die.Add(D4.Zero);
-        die.Add(D4.Zero);
+        dice = new List<D4>();
+        dice.Add(D4.Zero);
+        dice.Add(D4.Zero);
+        dice.Add(D4.Zero);
 
         // Set the starting player
         if(GameSettings.startingPlayer == GameSettings.Player.One)
@@ -400,9 +400,9 @@ public class GameLogic : MonoBehaviour
     void ThrowAllDie()
     {
         Debug.Log("Throw all die");
-        for (int i = 0; i < die.Count; ++i)
+        for (int i = 0; i < dice.Count; ++i)
         {
-            die[i] = ThrowDice();
+            dice[i] = ThrowDice();
         }
     }
 
@@ -414,7 +414,7 @@ public class GameLogic : MonoBehaviour
 
     void OrderDie()
     {
-        die.Sort();
+        dice.Sort();
     }
 
     bool CanReroll()
@@ -436,7 +436,7 @@ public class GameLogic : MonoBehaviour
 
     D4 GetCurrentDice()
     {
-        return die[currentActiveDice];
+        return dice[currentActiveDie];
     }
 
     bool CheckAllowedPieceMovement()
