@@ -174,7 +174,8 @@ public class GameLogic : MonoBehaviour
                         {
                             if (piece == potentialPieces[pieceIndex])
                             {
-                                MovePiece(piece, UnityEngine.Random.Range(0, 4));
+                                int moveIndex = Mathf.Clamp(UnityEngine.Random.Range(0, 4), 0, piece.allowedPlaces.Count - 1);
+                                MovePiece(piece, piece.allowedPlaces[moveIndex]);
                                 pieceMoved = true;
                             }
                         }
@@ -182,31 +183,6 @@ public class GameLogic : MonoBehaviour
                         if (pieceMoved) break;
                     }
                     if (pieceMoved) break;
-                }
-
-                if(!pieceMoved)
-                {
-                    Debug.Log("No piece to move, continue to next turn");
-                    currentActiveDie = dice.Count;
-                }
-
-                if(gameOver)
-                {
-                    return;
-                }
-
-                currentActiveDie++;
-                if (currentActiveDie >= dice.Count)
-                {
-                    NextPlayerTurn();
-                }
-                else
-                {
-                    if (!CheckAllowedPieceMovement())
-                    {
-                        Debug.Log("No piece to move, continue to next turn");
-                        NextPlayerTurn();
-                    }
                 }
             }
         }
@@ -600,16 +576,13 @@ public class GameLogic : MonoBehaviour
         return -1;
     }
 
-    void MovePiece(Piece piece, int moveIndex = 0)
+    public void MovePiece(Piece piece, int placeIndex)
     {
         if(piece.allowedPlaces.Count == 0)
         {
             Debug.LogWarning("Trying to move piece without valid places!", gameObject);
             return;
         }
-
-        moveIndex = Mathf.Clamp(moveIndex, 0, piece.allowedPlaces.Count - 1);
-        int placeIndex = piece.allowedPlaces[moveIndex];
 
         Debug.Log("Move piece (" + piece.type + ") to place: " + places[placeIndex].x + ", " + places[placeIndex].y + " (" + placeIndex + ")");
 
@@ -720,6 +693,25 @@ public class GameLogic : MonoBehaviour
         }
 
         GameInteraction.Instance.UpdatePieces();
+
+        if (gameOver)
+        {
+            return;
+        }
+
+        currentActiveDie++;
+        if (currentActiveDie >= dice.Count)
+        {
+            NextPlayerTurn();
+        }
+        else
+        {
+            if (!CheckAllowedPieceMovement())
+            {
+                Debug.Log("No piece to move, continue to next turn");
+                NextPlayerTurn();
+            }
+        }
     }
 
     void ActivateKing()

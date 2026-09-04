@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a21cc5c33798e4aa62abe75bd52546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameVisuals
+  camera: {fileID: 330585545}
   placePrefab: {fileID: 3265189858944031331, guid: 9c97f92cfff2e624ab987a813fab180e, type: 3}
   kingPrefab: {fileID: 3829477654152618110, guid: 935cac7932df1ec4488b52605df134de, type: 3}
   p1soldierPrefab: {fileID: 6728606216382490169, guid: 043f9fe70e182d3479a6cb8e1ee4a401, type: 3}
