@@ -4,6 +4,7 @@ using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static GameLogic;
 
 public class GameInteraction : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class GameInteraction : MonoBehaviour
     [SerializeField] GameObject p2soldierPrefab;
     [SerializeField] GameObject p2queenPrefab;
     [SerializeField] GameObject dicePrefab;
+    [SerializeField] GameObject p1capturesPos;
+    [SerializeField] GameObject p2capturesPos;
     [SerializeField] GameObject diePos1;
     [SerializeField] GameObject diePos2;
     [SerializeField] GameObject diePos3;
@@ -267,6 +270,24 @@ public class GameInteraction : MonoBehaviour
                     king.layer = LayerMask.NameToLayer(piece.owner == GameLogic.PieceOwner.P1 ? "P1" : "P2");
                 }
             }
+        }
+
+        for(int i = 0; i < GameLogic.Instance.p2captures; ++i)
+        {
+            p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
+            p1Soldiers[p1soldierIndex].transform.position = p2capturesPos.transform.position + Vector3.right * i;
+            p1Soldiers[p1soldierIndex].SetActive(true);
+            p1Soldiers[p1soldierIndex].name = "captured";
+            p1soldierIndex++;
+        }
+
+        for (int i = 0; i < GameLogic.Instance.p1captures; ++i)
+        {
+            p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
+            p2Soldiers[p2soldierIndex].transform.position = p1capturesPos.transform.position - Vector3.right * i;
+            p2Soldiers[p2soldierIndex].SetActive(true);
+            p2Soldiers[p2soldierIndex].name = "captured";
+            p2soldierIndex++;
         }
 
         List<GameLogic.Piece> potentialPieces = GameLogic.Instance.GetAllPotentialPieces();
