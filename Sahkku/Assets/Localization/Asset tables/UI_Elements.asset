@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db626ad063b13545924a9839ac5fa83, type: 3}
+  m_Name: UI_Elements
+  m_EditorClassIdentifier: Unity.Localization.Editor::UnityEditor.Localization.AssetTableCollection
+  m_SharedTableData: {fileID: 11400000, guid: 1f7b8931e8dc30d47948878dfe619ab1, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: df12132bd2b60c04fba05ce578edd99b, type: 2}
+  - {fileID: 11400000, guid: 58cd8661875ca3540bf1c359b32079b1, type: 2}
+  - {fileID: 11400000, guid: 043783d8eef39e34a859e6e8adb00510, type: 2}
+  m_Extensions: []
+  m_Group: Asset Table
+  references:
+    version: 2
+    RefIds: []

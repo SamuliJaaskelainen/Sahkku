@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-String-Tables-Northern Sami (se)
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Localization-String-Tables-Northern Sami (se)
+  m_GUID: 81f50ec380c6300428f3135a2a5a9729
+  m_SerializeEntries:
+  - m_GUID: a3a8863c3a85e48419f117b53db71a3d
+    m_Address: UI_Text_se
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-se
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 4947d723a9b9ab84db88824677357071, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: cf3cfd66c54d51c4699cc14d4a77edb2, type: 2}
+    - {fileID: 11400000, guid: 44637b82ec139e84eae5b7de8faf6131, type: 2}
+    - {fileID: 11400000, guid: 331bb8e78d4ac064d907d31866672c2d, type: 2}
