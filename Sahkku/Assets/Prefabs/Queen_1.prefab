@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: befe3005a073e0e49af4b01282c8a18c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.684541
+      value: 10.933
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: befe3005a073e0e49af4b01282c8a18c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -49,9 +49,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: befe3005a073e0e49af4b01282c8a18c, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: befe3005a073e0e49af4b01282c8a18c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: ddecf142889f07e4b95cb4f8e38f82a1, type: 2}
+      objectReference: {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
     - target: {fileID: 919132149155446097, guid: befe3005a073e0e49af4b01282c8a18c, type: 3}
       propertyPath: m_Name
       value: Queen_1
