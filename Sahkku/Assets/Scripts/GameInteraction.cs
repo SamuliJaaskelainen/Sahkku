@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -8,6 +10,8 @@ public class GameInteraction : MonoBehaviour
     public static GameInteraction Instance;
 
     [SerializeField] Camera camera;
+    [SerializeField] LayerMask p1mask;
+    [SerializeField] LayerMask p2mask;
     [SerializeField] GameObject placePrefab;
     [SerializeField] GameObject kingPrefab;
     [SerializeField] GameObject p1soldierPrefab;
@@ -20,6 +24,11 @@ public class GameInteraction : MonoBehaviour
     [SerializeField] GameObject diePos3;
     [SerializeField] Material pieceMaterial;
     [SerializeField] Material selectablePieceMaterial;
+    [SerializeField] TextMeshProUGUI gameStatus;
+    [SerializeField] GameObject rollDiceButton;
+    [SerializeField] GameObject dieHighlight1;
+    [SerializeField] GameObject dieHighlight2;
+    [SerializeField] GameObject dieHighlight3;
 
     List<GameObject> places = new List<GameObject>();
     List<GameObject> p1Soldiers = new List<GameObject>();
@@ -89,7 +98,79 @@ public class GameInteraction : MonoBehaviour
 
     void Update()
     {
-        if(Keyboard.current.escapeKey.wasPressedThisFrame)
+        if(GameLogic.Instance.gameOver)
+        {
+            if(GameLogic.Instance.winner == GameSettings.Player.One)
+            {
+                if(GameLogic.Instance.p1captures == GameLogic.BOARD_SIZE_X)
+                {
+                    gameStatus.text = "Player One WINS! All soldiers captured.";
+                }
+                else
+                {
+                    gameStatus.text = "Player One WINS! Queen captured.";
+                }
+            }
+            else
+            {
+                if (GameLogic.Instance.p2captures == GameLogic.BOARD_SIZE_X)
+                {
+                    gameStatus.text = "Player One WINS! All soldiers captured.";
+                }
+                else
+                {
+                    gameStatus.text = "Player One WINS! Queen captured.";
+                }
+            }
+        }
+        else
+        {
+            switch (GameLogic.Instance.turnPhase)
+            {
+                case GameLogic.TurnPhase.P1roll:
+                    gameStatus.text = "Player One Turn: Roll the dice";
+                    break;
+
+                case GameLogic.TurnPhase.P1move:
+                    gameStatus.text = "Player One Turn: Move pieces";
+                    break;
+
+                case GameLogic.TurnPhase.P2roll:
+                    gameStatus.text = "Player Two Turn: Roll the dice";
+                    break;
+
+                case GameLogic.TurnPhase.P2move:
+                    gameStatus.text = "Player Two Turn: Move pieces";
+                    break;
+            }
+        }
+
+        if ((GameLogic.Instance.turnPhase == GameLogic.TurnPhase.P1move || GameLogic.Instance.turnPhase == GameLogic.TurnPhase.P2move) && !GameLogic.Instance.gameOver)
+        {
+            dieHighlight1.SetActive(GameLogic.Instance.currentActiveDie == 0);
+            dieHighlight2.SetActive(GameLogic.Instance.currentActiveDie == 1);
+            dieHighlight3.SetActive(GameLogic.Instance.currentActiveDie == 2);
+        }
+        else
+        {
+            dieHighlight1.SetActive(false);
+            dieHighlight2.SetActive(false);
+            dieHighlight3.SetActive(false);
+        }
+
+        rollDiceButton.SetActive(false);
+        if (GameLogic.Instance.turnPhase == GameLogic.TurnPhase.P1roll || GameLogic.Instance.turnPhase == GameLogic.TurnPhase.P2roll || GameLogic.Instance.CanReroll())
+        {
+            if (!(GameSettings.singlePlayer && GameLogic.Instance.GetCurrentPlayer() == GameLogic.PieceOwner.P2))
+            {
+                if (!GameLogic.Instance.gameOver)
+                {
+                    rollDiceButton.SetActive(true);
+                }
+            }
+        }
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             SceneManager.LoadScene("MainMenu");
         }
@@ -98,7 +179,7 @@ public class GameInteraction : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if(Physics.Raycast(ray, out hit, 1000.0f))
+            if(Physics.Raycast(ray, out hit, 1000.0f, GameLogic.Instance.GetCurrentPlayer() == GameLogic.PieceOwner.P1 ? p1mask : p2mask))
             {
                 Debug.Log("Press: " + hit.transform.name, hit.transform.gameObject);
 
@@ -110,7 +191,7 @@ public class GameInteraction : MonoBehaviour
                     for (int i = 0; i < places.Count; ++i)
                     {
                         bool isValidPlace = data.pieceInfo.allowedPlaces.Contains(i);
-                        places[i].transform.GetChild(0).gameObject.SetActive(isValidPlace);
+                        places[i].SetActive(isValidPlace);
                     }
                 }
                 else if(hit.transform.tag == "Place")
@@ -183,6 +264,7 @@ public class GameInteraction : MonoBehaviour
                     king.name = piece.placeIndex.ToString();
                     king.GetComponent<PieceData>().pieceInfo = piece;
                     king.SetActive(true);
+                    king.layer = LayerMask.NameToLayer(piece.owner == GameLogic.PieceOwner.P1 ? "P1" : "P2");
                 }
             }
         }
@@ -200,7 +282,7 @@ public class GameInteraction : MonoBehaviour
     {
         foreach (GameObject go in places)
         {
-            go.transform.GetChild(0).gameObject.SetActive(false);
+            go.SetActive(false);
         }
         foreach (GameObject go in p1Soldiers) go.SetActive(false);
         foreach (GameObject go in p2Soldiers) go.SetActive(false);

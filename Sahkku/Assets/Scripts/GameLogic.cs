@@ -84,15 +84,17 @@ public class GameLogic : MonoBehaviour
 
     public List<Place> places;
     public List<D4> dice;
-    TurnPhase turnPhase;
-    int currentActiveDie;
-    bool gameOver;
-    int p1captures;
-    int p2captures;
+    public TurnPhase turnPhase;
+    public int currentActiveDie;
+    public bool gameOver;
+    public GameSettings.Player winner;
+    public int p1captures;
+    public int p2captures;
     float aiTimer = 0.0f;
-    float aiSpeed = 0.33f;
+    float aiSpeed = 1.0f;
     bool aiCanAct = false;
     int playerPieceIndex = 0;
+    bool tryRollDice = false;
 
     void Awake()
     {
@@ -117,8 +119,10 @@ public class GameLogic : MonoBehaviour
             aiCanAct = true;
         }
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame || (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2 && aiCanAct))
+        if (Keyboard.current.spaceKey.wasPressedThisFrame || tryRollDice || (GameSettings.singlePlayer && GetCurrentPlayer() == PieceOwner.P2 && aiCanAct))
         {
+            tryRollDice = false;
+
             if (turnPhase == TurnPhase.P1roll || turnPhase == TurnPhase.P2roll || CanReroll())
             {
                 if(turnPhase == TurnPhase.P1roll || turnPhase == TurnPhase.P2roll)
@@ -188,6 +192,12 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    public void InitDiceRoll()
+    {
+        Debug.Log("Init dice roll");
+        tryRollDice = true;
+    }
+
     void NextPlayerTurn()
     {
         ClearAllAllowedPlaces();
@@ -205,7 +215,7 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    PieceOwner GetCurrentPlayer()
+    public PieceOwner GetCurrentPlayer()
     {
         if((int)turnPhase < 2)
         {
@@ -408,7 +418,7 @@ public class GameLogic : MonoBehaviour
         dice.Sort();
     }
 
-    bool CanReroll()
+    public bool CanReroll()
     {
         bool hasActivePiece = false;
         foreach (Place place in places)
@@ -422,7 +432,7 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        return GetCurrentDice() == D4.Sahhku && hasActivePiece;
+        return GetCurrentDice() == D4.Sahhku && hasActivePiece && currentActiveDie == 0;
     }
 
     D4 GetCurrentDice()
@@ -502,11 +512,9 @@ public class GameLogic : MonoBehaviour
 
             // All pieces can try to move forward
             int indexTarget = p.placeIndex + direction;
-            //Debug.Log(p.placeIndex + "+" + direction);
-            //Debug.Log(indexTarget + "<" + places.Count + "&&" + indexTarget + ">=0"); 
             if (indexTarget < places.Count && indexTarget >= 0)
             {
-                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces, p.type);
             }
 
             // Queens and kings can move to any direction
@@ -514,20 +522,20 @@ public class GameLogic : MonoBehaviour
             {
                 direction = -direction;
                 indexTarget = p.placeIndex + direction;
-                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces, p.type);
 
                 indexTarget = GetPlaceIndexFromCoordinates(places[p.placeIndex].x, places[p.placeIndex].y + movementAmount);
-                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces, p.type);
 
                 indexTarget = GetPlaceIndexFromCoordinates(places[p.placeIndex].x, places[p.placeIndex].y - movementAmount);
-                TryAddAllowedPlace(indexTarget, ref allowedPlaces);
+                TryAddAllowedPlace(indexTarget, ref allowedPlaces, p.type);
             }
         }
 
         return allowedPlaces;
     }
 
-    void TryAddAllowedPlace(int indexTarget, ref List<int> allowedPlaces)
+    void TryAddAllowedPlace(int indexTarget, ref List<int> allowedPlaces, PieceType pieceType)
     {
         if(indexTarget < 0 || indexTarget > places.Count - 1)
             return;
@@ -538,7 +546,10 @@ public class GameLogic : MonoBehaviour
             allowedPlaces.Add(indexTarget);
         }
         else if (places[indexTarget].pieces[0].isActive
-            && !(places[indexTarget].pieces[0].type == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer()))
+            && !(places[indexTarget].pieces[0].type == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer())
+            && !(pieceType == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer())
+            && !(pieceType == PieceType.Queen && places[indexTarget].pieces[0].type == PieceType.King)
+            && !(pieceType == PieceType.King && places[indexTarget].pieces[0].owner == GetCurrentPlayer()))
         {
             Debug.Log("Allowed to move to an occupied place " + indexTarget);
             allowedPlaces.Add(indexTarget);
@@ -615,11 +626,13 @@ public class GameLogic : MonoBehaviour
                     {
                         Debug.Log("Game over!");
                         Debug.Log("P1 WON!");
+                        winner = GameSettings.Player.One;
                     }
                     else if (p2captures == BOARD_SIZE_X)
                     {
                         Debug.Log("Game over!");
                         Debug.Log("P2 WON!");
+                        winner = GameSettings.Player.Two;
                     }
                 }
                 else if (places[placeIndex].pieces[i].type == PieceType.King)
@@ -630,18 +643,20 @@ public class GameLogic : MonoBehaviour
                 else if (places[placeIndex].pieces[i].type == PieceType.Queen)
                 {
                     Debug.Log("Captered the queen!");
-                    //pieceIndiciesToRemove.Add(i);
+                    pieceIndiciesToRemove.Add(i);
                     gameOver = true;
 
                     if (GetCurrentPlayer() == PieceOwner.P1)
                     {
                         Debug.Log("Game over!");
                         Debug.Log("P1 WON!");
+                        winner = GameSettings.Player.One;
                     }
                     else
                     {
                         Debug.Log("Game over!");
                         Debug.Log("P2 WON!");
+                        winner = GameSettings.Player.Two;
                     }
                 }
             }
