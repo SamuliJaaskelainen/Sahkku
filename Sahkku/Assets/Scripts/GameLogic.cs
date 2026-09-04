@@ -296,12 +296,12 @@ public class GameLogic : MonoBehaviour
         {
             places[GetPlaceIndexFromCoordinates(BOARD_SIZE_X - 1, 0)].pieces[0].isActive = true;
             places[GetPlaceIndexFromCoordinates(0, BOARD_SIZE_Y - 1)].pieces[0].isActive = true;
-            places[GetPlaceIndexFromCoordinates(BOARD_SIZE_X - 1, 1)].pieces[0].isActive = true;
+            places[GetPlaceIndexFromCoordinates(BOARD_SIZE_X - 2, 0)].pieces[0].isActive = true;
             places[GetPlaceIndexFromCoordinates(1, BOARD_SIZE_Y - 1)].pieces[0].isActive = true;
-            places[GetPlaceIndexFromCoordinates(BOARD_SIZE_X - 1, 2)].pieces[0].isActive = true;
+            places[GetPlaceIndexFromCoordinates(BOARD_SIZE_X - 3, 0)].pieces[0].isActive = true;
             places[GetPlaceIndexFromCoordinates(2, BOARD_SIZE_Y - 1)].pieces[0].isActive = true;
 
-            places[GetPlaceIndexFromCoordinates(BOARD_SIZE_X - 1, 3)].pieces[0].canBeActivated = true;
+            places[GetPlaceIndexFromCoordinates(BOARD_SIZE_X - 4, 0)].pieces[0].canBeActivated = true;
             places[GetPlaceIndexFromCoordinates(3, BOARD_SIZE_Y - 1)].pieces[0].canBeActivated = true;
         }
         else
@@ -604,7 +604,8 @@ public class GameLogic : MonoBehaviour
         List<int> pieceIndiciesToRemove = new List<int>();
         for(int i = 0; i < places[placeIndex].pieces.Count; ++i)
         {
-            if (places[placeIndex].pieces[i].type == PieceType.Soldier)
+            if (places[placeIndex].pieces[i].type == PieceType.Soldier
+                && places[placeIndex].pieces[i].owner != GetCurrentPlayer())
             {
                 Debug.Log("Captered a piece!");
                 pieceIndiciesToRemove.Add(i);

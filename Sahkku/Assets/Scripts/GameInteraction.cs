@@ -219,10 +219,11 @@ public class GameInteraction : MonoBehaviour
         foreach (GameLogic.Place place in GameLogic.Instance.places)
         {
             int pieceCountInPlace = place.pieces.Count;
+            float centerOffset = (pieceCountInPlace - 1) * 0.5f;
             int currentPiece = 0;
             foreach (GameLogic.Piece piece in place.pieces)
             {
-                Vector3 offset = Vector3.back * currentPiece;
+                Vector3 offset = Vector3.back * (currentPiece - centerOffset);
                 if (piece.type == GameLogic.PieceType.Soldier)
                 {
                     if (piece.owner == GameLogic.PieceOwner.P1)

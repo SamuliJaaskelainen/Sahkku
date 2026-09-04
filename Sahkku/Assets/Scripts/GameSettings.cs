@@ -15,7 +15,7 @@ public class GameSettings : MonoBehaviour
     }
 
     public static bool singlePlayer = true;
-    public static bool evenOdds = false;
+    public static bool evenOdds = true;
     public static Player startingPlayer = Player.One;
     public static PieceModel p1Model = PieceModel.Wood;
     public static PieceModel p2Model = PieceModel.Wood;
