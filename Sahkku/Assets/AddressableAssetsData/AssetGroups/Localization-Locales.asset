@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-Locales
   m_GUID: f3f3ba3dcb7b2784fa3b9cdb554e0ef0
   m_SerializeEntries:
+  - m_GUID: 7568d8882f3205c46b0272089551d471
+    m_Address: Northern Sami (se)
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a9772bda728a3ff4ab6740f30b1142df
     m_Address: English (en)
     m_ReadOnly: 1

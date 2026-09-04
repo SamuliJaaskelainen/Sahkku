@@ -206,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4279857, y: 0.11851546, z: -0.05672539, w: 0.89418375}
-  m_LocalPosition: {x: 7.51, y: 19.63, z: -14.43}
+  m_LocalPosition: {x: 7.6, y: 20, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -452,9 +452,9 @@ MonoBehaviour:
   diePos1: {fileID: 930335617}
   diePos2: {fileID: 1652143916}
   diePos3: {fileID: 510761471}
-  pieceMaterial: {fileID: 2100000, guid: ddecf142889f07e4b95cb4f8e38f82a1, type: 2}
+  pieceMaterial: {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
   selectablePieceMaterial: {fileID: 2100000, guid: 14ee0acd0777d89409f2c9062c718084, type: 2}
-  boardScalar: {x: 1.784, y: 2.74}
+  boardScalar: {x: 1.784, y: 3.31}
 --- !u!1 &510761471
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +546,10 @@ PrefabInstance:
     - target: {fileID: 8580164590970380476, guid: 17d427b1f1cf4fd489a5dfb68c9ee176, type: 3}
       propertyPath: m_Name
       value: Board
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960208948583791110, guid: 17d427b1f1cf4fd489a5dfb68c9ee176, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8960208948583791110, guid: 17d427b1f1cf4fd489a5dfb68c9ee176, type: 3}
       propertyPath: m_LocalPosition.x

@@ -18,7 +18,7 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: Event DisplayDiceResults has a time (1.166667) outside the clip's valid range (0.000000..1.125000). It will never be fired
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -36,7 +36,7 @@ ModelImporter:
       takeName: Armature|ArmatureAction
       internalID: 4781951162920444690
       firstFrame: 0
-      lastFrame: 35
+      lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

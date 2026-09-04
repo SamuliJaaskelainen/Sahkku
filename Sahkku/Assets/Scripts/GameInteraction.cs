@@ -153,6 +153,8 @@ public class GameInteraction : MonoBehaviour
 
     public void RollDice(int index)
     {
+        dice[index].transform.localEulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        dice[index].GetComponentInChildren<Animator>().StopPlayback();
         dice[index].GetComponentInChildren<Animator>().SetTrigger("Throw");
     }
 
