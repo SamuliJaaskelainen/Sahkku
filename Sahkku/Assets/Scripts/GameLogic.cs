@@ -6,9 +6,11 @@ using static GameLogic;
 
 public class GameLogic : MonoBehaviour
 {
-    const int BOARD_SIZE_X = 15;
-    const int BOARD_SIZE_Y = 3;
-    const int BOARD_QUEEN_DISTANCE = 4;
+    public static GameLogic Instance;
+
+    public const int BOARD_SIZE_X = 15;
+    public const int BOARD_SIZE_Y = 3;
+    public const int BOARD_QUEEN_DISTANCE = 4;
 
     public enum PieceType
     {
@@ -80,8 +82,8 @@ public class GameLogic : MonoBehaviour
         P2move
     }
 
-    List<Place> places;
-    List<D4> dice;
+    public List<Place> places;
+    public List<D4> dice;
     TurnPhase turnPhase;
     int currentActiveDie;
     bool gameOver;
@@ -92,8 +94,9 @@ public class GameLogic : MonoBehaviour
     bool aiCanAct = false;
     int playerPieceIndex = 0;
 
-    void Start()
+    void Awake()
     {
+        Instance = this;
         InitGame();
     }
 
@@ -118,13 +121,17 @@ public class GameLogic : MonoBehaviour
         {
             if (turnPhase == TurnPhase.P1roll || turnPhase == TurnPhase.P2roll || CanReroll())
             {
-                ThrowAllDie();
-                OrderDie();
-                currentActiveDie = 0;
-
                 if(turnPhase == TurnPhase.P1roll || turnPhase == TurnPhase.P2roll)
                 {
+                    ThrowAllDice();
+                    OrderDie();
+                    currentActiveDie = 0;
                     turnPhase++;
+                }
+                else
+                {
+                    RerollSingleDie();
+                    OrderDie();
                 }
 
                 if (!CheckAllowedPieceMovement())
@@ -231,7 +238,7 @@ public class GameLogic : MonoBehaviour
         return PieceOwner.P2;
     }
 
-    void InitGame()
+    public void InitGame()
     {
         Debug.Log("Init game");
         gameOver = false;
@@ -397,16 +404,24 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    void ThrowAllDie()
+    void RerollSingleDie()
     {
-        Debug.Log("Throw all die");
+        Debug.Log("Throw single die");
+        dice[0] = RandomThrow();
+        GameInteraction.Instance.RollDice(0);
+    }
+
+    void ThrowAllDice()
+    {
+        Debug.Log("Throw all dice");
         for (int i = 0; i < dice.Count; ++i)
         {
-            dice[i] = ThrowDice();
+            dice[i] = RandomThrow();
+            GameInteraction.Instance.RollDice(i);
         }
     }
 
-    D4 ThrowDice()
+    D4 RandomThrow()
     {
         int r = UnityEngine.Random.Range(0, 4);
         return (D4)r;
@@ -462,6 +477,7 @@ public class GameLogic : MonoBehaviour
             }
         }
         Debug.Log("Allowed places: " + anyAllowedPlaces);
+        GameInteraction.Instance.UpdatePieces();
         return anyAllowedPlaces;
     }
 
@@ -474,6 +490,7 @@ public class GameLogic : MonoBehaviour
                 piece.allowedPlaces.Clear();
             }
         }
+        GameInteraction.Instance.UpdatePieces();
     }
 
     List<int> GetAllowedPlaces(Piece p)
@@ -552,7 +569,7 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    List<Piece> GetAllPotentialPieces()
+    public List<Piece> GetAllPotentialPieces()
     {
         List<Piece> potentialPieces = new List<Piece>();
 
@@ -701,6 +718,8 @@ public class GameLogic : MonoBehaviour
                 }
             }
         }
+
+        GameInteraction.Instance.UpdatePieces();
     }
 
     void ActivateKing()

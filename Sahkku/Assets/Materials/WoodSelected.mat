@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Wood
+  m_Name: WoodSelected
   m_Shader: {fileID: -6465566751694194690, guid: 16919c4ffebcb10499d0963d9230fc1f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -125,7 +125,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _IsSelected: 0
+    - _IsSelected: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
