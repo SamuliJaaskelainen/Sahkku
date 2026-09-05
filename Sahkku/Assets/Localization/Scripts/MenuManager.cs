@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -7,6 +8,13 @@ public class MenuManager : MonoBehaviour
     private GameObject mainMenuPanel;
     [SerializeField]
     private GameObject gameOptionsPanel;
+
+    [SerializeField]
+    private Toggle soundToggle;
+    [SerializeField]
+    private Toggle musicToggle;
+    [SerializeField]
+    private Toggle oddToggle;
 
     private void Start()
     {
@@ -25,9 +33,9 @@ public class MenuManager : MonoBehaviour
         ShowGameOptions ();
     }
 
-    public void ToggleOdds(bool value)
+    public void ToggleOdds()
     {
-        GameSettings.evenOdds = value;
+        GameSettings.evenOdds = oddToggle.isOn;
     }
 
     public void ShowMainMenu()
@@ -44,12 +52,14 @@ public class MenuManager : MonoBehaviour
 
     public void ToggleAudio(bool value)
     {
-        GameSettings.muteSounds = value;
+        GameSettings.muteSounds = !soundToggle.isOn;
+        Debug.Log("Mute sounds: " + GameSettings.muteSounds);
     }
 
     public void ToggleMusic(bool value)
     {
-        GameSettings.muteMusic = value;
+        GameSettings.muteMusic = !musicToggle.isOn;
+        Debug.Log("Mute music: " + GameSettings.muteMusic);
     }
 
     public void StartGame()

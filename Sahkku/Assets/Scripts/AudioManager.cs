@@ -12,6 +12,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager Instance;
 
+    AudioSource musicSource;
+
     void Awake()
     {
         Instance = this;
@@ -23,6 +25,20 @@ public class AudioManager : MonoBehaviour
         {
             GameObject audioObject = Instantiate(audioPrefab, transform) as GameObject;
             audioPoolObject.Add(audioObject);
+        }
+
+        musicSource = GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        if(GameSettings.muteMusic && musicSource.isPlaying)
+        {
+            musicSource.Stop();
+        }
+        else if(!GameSettings.muteMusic && !musicSource.isPlaying)
+        {
+            musicSource.Play();
         }
     }
 
