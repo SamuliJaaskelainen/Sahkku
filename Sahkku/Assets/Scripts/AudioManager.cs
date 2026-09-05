@@ -47,6 +47,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayRandomSound(string clipName, int amount)
+    {
+        PlaySound(clipName + Random.Range(1, amount + 1).ToString());
+    }
+
     public void PlaySound(string clipName, float volume = 1.0f, float pitch = 1.0f)
     {
         for (int i = 0; i < soundEffects.Length; ++i)
@@ -61,6 +66,11 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(int clipIndex, float volume = 1.0f, float pitch = 1.0f)
     {
+        if(GameSettings.muteSounds)
+        {
+            return;
+        }
+
         if (clipIndex >= soundEffects.Length)
         {
             Debug.LogError("No sound at index: " + clipIndex);

@@ -11,6 +11,6 @@ public class ButtonSoundPlayer : MonoBehaviour
 
     void PlaySound()
     {
-        AudioManager.Instance.PlaySound("Placeholder"); // Audio button
+        AudioManager.Instance.PlayRandomSound("MuorraDronnetSamiOkta", 5);
     }
 }

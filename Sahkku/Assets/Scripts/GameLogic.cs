@@ -406,7 +406,7 @@ public class GameLogic : MonoBehaviour
         Debug.Log("Throw single die");
         dice[0] = RandomThrow();
         GameInteraction.Instance.RollDice(0);
-        AudioManager.Instance.PlaySound("Placeholder"); // Audio single die
+        AudioManager.Instance.PlayRandomSound("BircutOkta", 8);
     }
 
     void ThrowAllDice()
@@ -417,7 +417,7 @@ public class GameLogic : MonoBehaviour
             dice[i] = RandomThrow();
             GameInteraction.Instance.RollDice(i);
         }
-        AudioManager.Instance.PlaySound("Placeholder"); // Audio all dice
+        AudioManager.Instance.PlayRandomSound("BircutGolbma", 13);
     }
 
     D4 RandomThrow()
@@ -618,6 +618,7 @@ public class GameLogic : MonoBehaviour
             {
                 Debug.Log("Captered a piece!");
                 pieceIndiciesToRemove.Add(i);
+                AudioManager.Instance.PlayRandomSound("GodditGalgu", 3);
 
                 if (GetCurrentPlayer() == PieceOwner.P1)
                 {
@@ -636,7 +637,7 @@ public class GameLogic : MonoBehaviour
                     Debug.Log("P1 WON!");
                     gameOver = true;
                     winner = GameSettings.Player.One;
-                    AudioManager.Instance.PlaySound("Placeholder"); // Audio victory
+                    AudioManager.Instance.PlaySound("Riskut");
                 }
                 else if (p2captures == BOARD_SIZE_X)
                 {
@@ -644,20 +645,21 @@ public class GameLogic : MonoBehaviour
                     Debug.Log("P2 WON!");
                     gameOver = true;
                     winner = GameSettings.Player.Two;
-                    AudioManager.Instance.PlaySound("Placeholder"); // Audio victory
+                    AudioManager.Instance.PlaySound("Riskut");
                 }
             }
             else if (places[placeIndex].pieces[i].type == PieceType.King)
             {
                 Debug.Log("Captered the king!");
                 places[placeIndex].pieces[i].owner = GetCurrentPlayer();
+                AudioManager.Instance.PlaySound("FasketGonagas1", 3);
             }
             else if (places[placeIndex].pieces[i].type == PieceType.Queen)
             {
                 Debug.Log("Captered the queen!");
                 pieceIndiciesToRemove.Add(i);
                 gameOver = true;
-                AudioManager.Instance.PlaySound("Placeholder"); // Audio victory
+                AudioManager.Instance.PlaySound("Riskut");
 
                 if (GetCurrentPlayer() == PieceOwner.P1)
                 {
@@ -674,26 +676,36 @@ public class GameLogic : MonoBehaviour
             }
         }
 
+        if(pieceIndiciesToRemove.Count == 0)
+        {
+            if(piece.type == PieceType.Soldier)
+            {
+                if(GetCurrentPlayer() == PieceOwner.P1)
+                {
+                    AudioManager.Instance.PlayRandomSound("MuorraGalguOkta", 5);
+                }
+                else
+                {
+                    AudioManager.Instance.PlayRandomSound("MuorraOlmmaiOkta", 9);
+                }
+            }
+            else
+            {
+                if(GetCurrentPlayer() == PieceOwner.P1)
+                {
+                    AudioManager.Instance.PlayRandomSound("MuorraDronnetSamiOkta", 5);
+                }
+                else
+                {
+                    AudioManager.Instance.PlayRandomSound("MuorraDronnetDaccaOkta", 4);
+                }
+            }
+        }
+
         for (int i = pieceIndiciesToRemove.Count - 1; i >= 0; --i)
         {
             int index = pieceIndiciesToRemove[i];
             places[placeIndex].pieces.RemoveAt(index);
-        }
-
-        if(pieceIndiciesToRemove.Count > 0)
-        {
-            if(piece.type == PieceType.Soldier)
-            {
-                AudioManager.Instance.PlaySound("Placeholder"); // Audio move
-            }
-            else
-            {
-                AudioManager.Instance.PlaySound("Placeholder"); // Audio move large
-            }
-        }
-        else
-        {
-            AudioManager.Instance.PlaySound("Placeholder"); // Audio capture
         }
 
         // Activate next soldier, if possible
