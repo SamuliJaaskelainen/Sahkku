@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static GameLogic;
 
+/// <summary>
+/// Gameplay logic for sáhkku with two queens
+/// 
+/// Known issues:
+///  - Soldiers do not loop correctly when they reach the end of the board
+///  - Adjusting the board size in not tested (visual part is hardcoded to 15x3)
+/// </summary>
 public class GameLogic : MonoBehaviour
 {
     public static GameLogic Instance;
@@ -399,6 +406,7 @@ public class GameLogic : MonoBehaviour
         Debug.Log("Throw single die");
         dice[0] = RandomThrow();
         GameInteraction.Instance.RollDice(0);
+        AudioManager.Instance.PlaySound("Placeholder"); // Audio single die
     }
 
     void ThrowAllDice()
@@ -409,6 +417,7 @@ public class GameLogic : MonoBehaviour
             dice[i] = RandomThrow();
             GameInteraction.Instance.RollDice(i);
         }
+        AudioManager.Instance.PlaySound("Placeholder"); // Audio all dice
     }
 
     D4 RandomThrow()
@@ -625,13 +634,17 @@ public class GameLogic : MonoBehaviour
                 {
                     Debug.Log("Game over!");
                     Debug.Log("P1 WON!");
+                    gameOver = true;
                     winner = GameSettings.Player.One;
+                    AudioManager.Instance.PlaySound("Placeholder"); // Audio victory
                 }
                 else if (p2captures == BOARD_SIZE_X)
                 {
                     Debug.Log("Game over!");
                     Debug.Log("P2 WON!");
+                    gameOver = true;
                     winner = GameSettings.Player.Two;
+                    AudioManager.Instance.PlaySound("Placeholder"); // Audio victory
                 }
             }
             else if (places[placeIndex].pieces[i].type == PieceType.King)
@@ -644,6 +657,7 @@ public class GameLogic : MonoBehaviour
                 Debug.Log("Captered the queen!");
                 pieceIndiciesToRemove.Add(i);
                 gameOver = true;
+                AudioManager.Instance.PlaySound("Placeholder"); // Audio victory
 
                 if (GetCurrentPlayer() == PieceOwner.P1)
                 {
@@ -664,6 +678,22 @@ public class GameLogic : MonoBehaviour
         {
             int index = pieceIndiciesToRemove[i];
             places[placeIndex].pieces.RemoveAt(index);
+        }
+
+        if(pieceIndiciesToRemove.Count > 0)
+        {
+            if(piece.type == PieceType.Soldier)
+            {
+                AudioManager.Instance.PlaySound("Placeholder"); // Audio move
+            }
+            else
+            {
+                AudioManager.Instance.PlaySound("Placeholder"); // Audio move large
+            }
+        }
+        else
+        {
+            AudioManager.Instance.PlaySound("Placeholder"); // Audio capture
         }
 
         // Activate next soldier, if possible
