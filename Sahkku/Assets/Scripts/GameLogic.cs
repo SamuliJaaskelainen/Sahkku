@@ -105,7 +105,7 @@ public class GameLogic : MonoBehaviour
 
     void Update()
     {
-        UpdateBoard();
+        //DrawDebugBoard();
 
         if (gameOver)
         {
@@ -332,7 +332,7 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    void UpdateBoard()
+    void DrawDebugBoard()
     {
         float yOffset = 0.2f;
         foreach (Place p in places)
@@ -550,10 +550,10 @@ public class GameLogic : MonoBehaviour
             allowedPlaces.Add(indexTarget);
         }
         else if (places[indexTarget].pieces[0].isActive
-            && !(places[indexTarget].pieces[0].type == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer())
-            && !(pieceType == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer())
-            && !(pieceType == PieceType.Queen && places[indexTarget].pieces[0].type == PieceType.King)
-            && !(pieceType == PieceType.King && places[indexTarget].pieces[0].owner == GetCurrentPlayer()))
+            && !(places[indexTarget].pieces[0].type == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer()) // Cannot move on top of your own queen
+            && !(places[indexTarget].pieces[0].type == PieceType.King && places[indexTarget].pieces[0].owner == GetCurrentPlayer()) // Cannot move on top of your own king
+            && !(pieceType == PieceType.Queen && places[indexTarget].pieces[0].owner == GetCurrentPlayer()) // Queen cannot move on top of your other units
+            && !(pieceType == PieceType.King && places[indexTarget].pieces[0].owner == GetCurrentPlayer())) // King cannot move on top of your other units
         {
             Debug.Log("Allowed to move to an occupied place " + indexTarget);
             allowedPlaces.Add(indexTarget);
