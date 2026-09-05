@@ -28,6 +28,7 @@ public class AudioManager : MonoBehaviour
         }
 
         musicSource = GetComponent<AudioSource>();
+        musicSource.volume = 0.2f;
     }
 
     void Update()
