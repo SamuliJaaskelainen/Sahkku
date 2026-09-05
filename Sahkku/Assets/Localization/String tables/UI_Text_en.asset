@@ -47,15 +47,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51231158800384
-    m_Localized: Bone
+    m_Localized: Stone
     m_Metadata:
       m_Items: []
   - m_Id: 69977206263808
-    m_Localized: P1 Models
+    m_Localized: Women
     m_Metadata:
       m_Items: []
   - m_Id: 70070793768960
-    m_Localized: P2 Models
+    m_Localized: Men
     m_Metadata:
       m_Items: []
   - m_Id: 86541167071232
@@ -76,6 +76,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 359107659456512
     m_Localized: Roll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 371737024106496
+    m_Localized: 'Women''s Turn: Roll the dice'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 372885332267008
+    m_Localized: 'Women''s Turn: Move pieces'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 372977829253120
+    m_Localized: 'Men''s Turn: Move pieces'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373083085312000
+    m_Localized: 'Men''s Turn: Roll the dice'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373463038922752
+    m_Localized: Women win! All soldiers killed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373532693729280
+    m_Localized: Men win! All soldiers killed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373561017864192
+    m_Localized: Women win! Queen killed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373585160278016
+    m_Localized: Men win! Queen killed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421271100035072
+    m_Localized: Audio
     m_Metadata:
       m_Items: []
   references:

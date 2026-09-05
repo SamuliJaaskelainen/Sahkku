@@ -44,7 +44,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51231158800384
-    m_Key: Bone_Text
+    m_Key: Stone_Text
     m_Metadata:
       m_Items: []
   - m_Id: 69977206263808
@@ -73,6 +73,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 359107659456512
     m_Key: Roll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 371737024106496
+    m_Key: Player_1_Roll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 372885332267008
+    m_Key: Player_1_Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 372977829253120
+    m_Key: Player_2_Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373083085312000
+    m_Key: Player_2_Roll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373463038922752
+    m_Key: Player_1_Win_Soldier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373532693729280
+    m_Key: Player_2_Win_Soldier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373561017864192
+    m_Key: Player_1_Win_Queen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373585160278016
+    m_Key: Player_2_Win_Queen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421271100035072
+    m_Key: Audio
     m_Metadata:
       m_Items: []
   m_Metadata:

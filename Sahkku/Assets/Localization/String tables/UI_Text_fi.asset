@@ -47,15 +47,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51231158800384
-    m_Localized: Luu
+    m_Localized: Kivi
     m_Metadata:
       m_Items: []
   - m_Id: 69977206263808
-    m_Localized: P1 Palat
+    m_Localized: Naiset
     m_Metadata:
       m_Items: []
   - m_Id: 70070793768960
-    m_Localized: P2 Palat
+    m_Localized: Miehet
     m_Metadata:
       m_Items: []
   - m_Id: 86541167071232
@@ -76,6 +76,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 359107659456512
     m_Localized: "Heit\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 371737024106496
+    m_Localized: "Naisten vuoro: Heit\xE4 nopat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 372885332267008
+    m_Localized: 'Naisten vuoro: Liikuta paloja'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 372977829253120
+    m_Localized: 'Miesten vuoro: Liikuta paloja'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373083085312000
+    m_Localized: "Miesten vuoro: Heit\xE4 nopat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373463038922752
+    m_Localized: Naiset voittavat! Kaikki sotilaat tapettu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373532693729280
+    m_Localized: Miehet voittavat! Kaikki sotilaat tapettu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373561017864192
+    m_Localized: Naiset voittavat! Kuningatar tapettu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373585160278016
+    m_Localized: Miehet voittavat! Kuningatar tapettu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421271100035072
+    m_Localized: "\xC4\xE4ni"
     m_Metadata:
       m_Items: []
   references:

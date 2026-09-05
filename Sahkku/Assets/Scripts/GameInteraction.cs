@@ -3,6 +3,7 @@ using TMPro;
 using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using static GameLogic;
 
@@ -122,22 +123,22 @@ public class GameInteraction : MonoBehaviour
             {
                 if(GameLogic.Instance.p1captures == GameLogic.BOARD_SIZE_X)
                 {
-                    gameStatus.text = "Player One WINS! All soldiers captured.";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_1_Win_Soldier");
                 }
                 else
                 {
-                    gameStatus.text = "Player One WINS! Queen captured.";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_1_Win_Queen");
                 }
             }
             else
             {
                 if (GameLogic.Instance.p2captures == GameLogic.BOARD_SIZE_X)
                 {
-                    gameStatus.text = "Player One WINS! All soldiers captured.";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_1_Win_Soldier");
                 }
                 else
                 {
-                    gameStatus.text = "Player One WINS! Queen captured.";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_2_Win_Queen");
                 }
             }
         }
@@ -146,19 +147,19 @@ public class GameInteraction : MonoBehaviour
             switch (GameLogic.Instance.turnPhase)
             {
                 case GameLogic.TurnPhase.P1roll:
-                    gameStatus.text = "Player One Turn: Roll the dice";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_1_Roll");
                     break;
 
                 case GameLogic.TurnPhase.P1move:
-                    gameStatus.text = "Player One Turn: Move pieces";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_1_Move");
                     break;
 
                 case GameLogic.TurnPhase.P2roll:
-                    gameStatus.text = "Player Two Turn: Roll the dice";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_2_Roll");
                     break;
 
                 case GameLogic.TurnPhase.P2move:
-                    gameStatus.text = "Player Two Turn: Move pieces";
+                    gameStatus.text = LocalizationSettings.StringDatabase.GetLocalizedString("UI_Text", "Player_2_Move");
                     break;
             }
         }
