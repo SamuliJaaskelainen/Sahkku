@@ -742,19 +742,57 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 160
   placePrefab: {fileID: 3265189858944031331, guid: 9c97f92cfff2e624ab987a813fab180e, type: 3}
-  kingPrefab: {fileID: 3829477654152618110, guid: 935cac7932df1ec4488b52605df134de, type: 3}
-  p1soldierPrefab: {fileID: 6728606216382490169, guid: 043f9fe70e182d3479a6cb8e1ee4a401, type: 3}
-  p1queenPrefab: {fileID: 4016219203232783794, guid: 8411d73287502174daec6a9debe5bdb5, type: 3}
-  p2soldierPrefab: {fileID: 124390096180364961, guid: acf8b73bdfe4f414bac316427581be5f, type: 3}
-  p2queenPrefab: {fileID: 5662029125534562198, guid: 089a3197434417943830c5f584dbe602, type: 3}
+  kingPrefab:
+  - {fileID: 3829477654152618110, guid: 935cac7932df1ec4488b52605df134de, type: 3}
+  - {fileID: 3590363014687885615, guid: ab92a4f981c36b544ac64d6a5263fb9b, type: 3}
+  p1soldierPrefab:
+  - {fileID: 6728606216382490169, guid: 043f9fe70e182d3479a6cb8e1ee4a401, type: 3}
+  - {fileID: 5345512547715252062, guid: 2d3ed4cde24ca49429ac432564577f46, type: 3}
+  p1queenPrefab:
+  - {fileID: 4016219203232783794, guid: 8411d73287502174daec6a9debe5bdb5, type: 3}
+  - {fileID: 3127896347711801966, guid: a1d735f517a28394fb88e9c9b63c39e5, type: 3}
+  p2soldierPrefab:
+  - {fileID: 124390096180364961, guid: acf8b73bdfe4f414bac316427581be5f, type: 3}
+  - {fileID: 807112713320720385, guid: 843e2c8b0f6d99449b16e22bd6e4f48f, type: 3}
+  p2queenPrefab:
+  - {fileID: 5662029125534562198, guid: 089a3197434417943830c5f584dbe602, type: 3}
+  - {fileID: 3990507309871715213, guid: 948569f5da012e949888fd9936fd9162, type: 3}
   dicePrefab: {fileID: 6745440316972717186, guid: f2eedfd59ffe66047b01cd14416eb2ff, type: 3}
   p1capturesPos: {fileID: 38107999}
   p2capturesPos: {fileID: 716827737}
   diePos1: {fileID: 930335617}
   diePos2: {fileID: 1652143916}
   diePos3: {fileID: 510761471}
-  pieceMaterial: {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
-  selectablePieceMaterial: {fileID: 2100000, guid: 14ee0acd0777d89409f2c9062c718084, type: 2}
+  p1SoldierPieceMaterial:
+  - {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
+  - {fileID: 2100000, guid: 63f796a4a895d8245bbaedf008f5e289, type: 2}
+  p1SoldierSelectablePieceMaterial:
+  - {fileID: 2100000, guid: 14ee0acd0777d89409f2c9062c718084, type: 2}
+  - {fileID: 2100000, guid: 0ed205f85d93683448b07371f29032c9, type: 2}
+  p2SoldierPieceMaterial:
+  - {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
+  - {fileID: 2100000, guid: fae659a0e6370eb4386e3a1453f68215, type: 2}
+  p2SoldierSelectablePieceMaterial:
+  - {fileID: 2100000, guid: 14ee0acd0777d89409f2c9062c718084, type: 2}
+  - {fileID: 2100000, guid: 9dedb4486626ecc4da182e0a1146430c, type: 2}
+  p1QueenPieceMaterial:
+  - {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
+  - {fileID: 2100000, guid: 045aecab3e512d840a7d39c36d6db7bd, type: 2}
+  p1QueenSelectablePieceMaterial:
+  - {fileID: 2100000, guid: 14ee0acd0777d89409f2c9062c718084, type: 2}
+  - {fileID: 2100000, guid: a5d37eeda1d3a7c4495a9778514fb5b6, type: 2}
+  p2QueenPieceMaterial:
+  - {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
+  - {fileID: 2100000, guid: 045aecab3e512d840a7d39c36d6db7bd, type: 2}
+  p2QueenSelectablePieceMaterial:
+  - {fileID: 2100000, guid: 14ee0acd0777d89409f2c9062c718084, type: 2}
+  - {fileID: 2100000, guid: a5d37eeda1d3a7c4495a9778514fb5b6, type: 2}
+  kingPieceMaterial:
+  - {fileID: 2100000, guid: 048b955a9bb84ae43b1ecca20b175277, type: 2}
+  - {fileID: 2100000, guid: 6e0df8838e6a8ce4e9e37aafa6dc6df8, type: 2}
+  kingSelectablePieceMaterial:
+  - {fileID: 2100000, guid: 14ee0acd0777d89409f2c9062c718084, type: 2}
+  - {fileID: 2100000, guid: 476022abfaaf8f445804362bc63c43bf, type: 2}
   gameStatus: {fileID: 2013224659}
   rollDiceButton: {fileID: 2085158163}
   dieHighlight1: {fileID: 842406839}

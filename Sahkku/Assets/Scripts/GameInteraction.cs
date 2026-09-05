@@ -14,24 +14,35 @@ public class GameInteraction : MonoBehaviour
     [SerializeField] LayerMask p1mask;
     [SerializeField] LayerMask p2mask;
     [SerializeField] GameObject placePrefab;
-    [SerializeField] GameObject kingPrefab;
-    [SerializeField] GameObject p1soldierPrefab;
-    [SerializeField] GameObject p1queenPrefab;
-    [SerializeField] GameObject p2soldierPrefab;
-    [SerializeField] GameObject p2queenPrefab;
+    [SerializeField] GameObject[] kingPrefab;
+    [SerializeField] GameObject[] p1soldierPrefab;
+    [SerializeField] GameObject[] p1queenPrefab;
+    [SerializeField] GameObject[] p2soldierPrefab;
+    [SerializeField] GameObject[] p2queenPrefab;
     [SerializeField] GameObject dicePrefab;
     [SerializeField] GameObject p1capturesPos;
     [SerializeField] GameObject p2capturesPos;
     [SerializeField] GameObject diePos1;
     [SerializeField] GameObject diePos2;
     [SerializeField] GameObject diePos3;
-    [SerializeField] Material pieceMaterial;
-    [SerializeField] Material selectablePieceMaterial;
+    [SerializeField] Material[] p1SoldierPieceMaterial;
+    [SerializeField] Material[] p1SoldierSelectablePieceMaterial;
+    [SerializeField] Material[] p2SoldierPieceMaterial;
+    [SerializeField] Material[] p2SoldierSelectablePieceMaterial;
+    [SerializeField] Material[] p1QueenPieceMaterial;
+    [SerializeField] Material[] p1QueenSelectablePieceMaterial;
+    [SerializeField] Material[] p2QueenPieceMaterial;
+    [SerializeField] Material[] p2QueenSelectablePieceMaterial;
+    [SerializeField] Material[] kingPieceMaterial;
+    [SerializeField] Material[] kingSelectablePieceMaterial;
     [SerializeField] TextMeshProUGUI gameStatus;
     [SerializeField] GameObject rollDiceButton;
     [SerializeField] GameObject dieHighlight1;
     [SerializeField] GameObject dieHighlight2;
     [SerializeField] GameObject dieHighlight3;
+    int p1MaterialIndex = 0;
+    int p2MaterialIndex = 0;
+    int kingMaterialIndex = 0;
 
     List<GameObject> places = new List<GameObject>();
     List<GameObject> p1Soldiers = new List<GameObject>();
@@ -55,7 +66,11 @@ public class GameInteraction : MonoBehaviour
     }
 
     void Start()
-    { 
+    {
+        p1MaterialIndex = (int)GameSettings.p1Model;
+        p2MaterialIndex = (int)GameSettings.p2Model;
+        kingMaterialIndex = (int)GameSettings.kingModel;
+
         int y = 0;
         for (int x = 0; x < GameLogic.BOARD_SIZE_X; ++x)
         {
@@ -82,13 +97,13 @@ public class GameInteraction : MonoBehaviour
 
         for (int i = 0; i < GameLogic.BOARD_SIZE_X; ++i)
         {
-            p1Soldiers.Add(Instantiate(p1soldierPrefab));
-            p2Soldiers.Add(Instantiate(p2soldierPrefab));
+            p1Soldiers.Add(Instantiate(p1soldierPrefab[p1MaterialIndex]));
+            p2Soldiers.Add(Instantiate(p2soldierPrefab[p2MaterialIndex]));
         }
 
-        p1queen = Instantiate(p1queenPrefab);
-        p2queen = Instantiate(p2queenPrefab);
-        king = Instantiate(kingPrefab);
+        p1queen = Instantiate(p1queenPrefab[p1MaterialIndex]);
+        p2queen = Instantiate(p2queenPrefab[p2MaterialIndex]);
+        king = Instantiate(kingPrefab[kingMaterialIndex]);
 
         HideAllModels();
 
@@ -233,7 +248,7 @@ public class GameInteraction : MonoBehaviour
                 {
                     if (piece.owner == GameLogic.PieceOwner.P1)
                     {
-                        p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
+                        p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? p1SoldierSelectablePieceMaterial[p1MaterialIndex] : p1SoldierPieceMaterial[p1MaterialIndex];
                         p1Soldiers[p1soldierIndex].transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p1Soldiers[p1soldierIndex].SetActive(true);
                         p1Soldiers[p1soldierIndex].name = piece.placeIndex.ToString();
@@ -242,7 +257,7 @@ public class GameInteraction : MonoBehaviour
                     }
                     else
                     {
-                        p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
+                        p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? p2SoldierSelectablePieceMaterial[p2MaterialIndex] : p2SoldierPieceMaterial[p2MaterialIndex];
                         p2Soldiers[p2soldierIndex].transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p2Soldiers[p2soldierIndex].SetActive(true);
                         p2Soldiers[p2soldierIndex].name = piece.placeIndex.ToString();
@@ -254,7 +269,7 @@ public class GameInteraction : MonoBehaviour
                 {
                     if (piece.owner == GameLogic.PieceOwner.P1)
                     {
-                        p1queen.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
+                        p1queen.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? p1QueenSelectablePieceMaterial[p1MaterialIndex] : p1QueenPieceMaterial[p1MaterialIndex];
                         p1queen.transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p1queen.name = piece.placeIndex.ToString();
                         p1queen.GetComponent<PieceData>().pieceInfo = piece;
@@ -262,7 +277,7 @@ public class GameInteraction : MonoBehaviour
                     }
                     else
                     {
-                        p2queen.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
+                        p2queen.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? p2QueenSelectablePieceMaterial[p2MaterialIndex] : p2QueenPieceMaterial[p2MaterialIndex];
                         p2queen.transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                         p2queen.name = piece.placeIndex.ToString();
                         p2queen.GetComponent<PieceData>().pieceInfo = piece;
@@ -271,7 +286,7 @@ public class GameInteraction : MonoBehaviour
                 }
                 else if (piece.type == GameLogic.PieceType.King)
                 {
-                    king.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? selectablePieceMaterial : pieceMaterial;
+                    king.transform.GetComponent<MeshRenderer>().material = piece.IsSelectable() ? kingSelectablePieceMaterial[kingMaterialIndex] : kingPieceMaterial[kingMaterialIndex];
                     king.transform.position = GetScaledBoardPosition(place.x, place.y) + offset;
                     king.name = piece.placeIndex.ToString();
                     king.GetComponent<PieceData>().pieceInfo = piece;
@@ -286,7 +301,7 @@ public class GameInteraction : MonoBehaviour
         {
             if (p1soldierIndex < p1Soldiers.Count)
             {
-                p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
+                p1Soldiers[p1soldierIndex].transform.GetComponent<MeshRenderer>().material = p1SoldierPieceMaterial[p1MaterialIndex];
                 p1Soldiers[p1soldierIndex].transform.position = p2capturesPos.transform.position + Vector3.right * i;
                 p1Soldiers[p1soldierIndex].SetActive(true);
                 p1Soldiers[p1soldierIndex].name = "captured";
@@ -298,7 +313,7 @@ public class GameInteraction : MonoBehaviour
         {
             if (p2soldierIndex < p2Soldiers.Count)
             {
-                p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = pieceMaterial;
+                p2Soldiers[p2soldierIndex].transform.GetComponent<MeshRenderer>().material = p2SoldierPieceMaterial[p2MaterialIndex];
                 p2Soldiers[p2soldierIndex].transform.position = p1capturesPos.transform.position - Vector3.right * i;
                 p2Soldiers[p2soldierIndex].SetActive(true);
                 p2Soldiers[p2soldierIndex].name = "captured";
