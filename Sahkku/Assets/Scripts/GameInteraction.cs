@@ -206,6 +206,7 @@ public class GameInteraction : MonoBehaviour
                 if (data != null)
                 {
                     selectedPiece = data;
+                    UpdatePieces();
                     for (int i = 0; i < places.Count; ++i)
                     {
                         bool isValidPlace = data.pieceInfo.allowedPlaces.Contains(i);
@@ -218,6 +219,7 @@ public class GameInteraction : MonoBehaviour
                     {
                         GameLogic.Instance.MovePiece(selectedPiece.pieceInfo, int.Parse(hit.transform.name));
                         selectedPiece = null;
+                        UpdatePieces();
                     }
                 }
             }
@@ -244,6 +246,15 @@ public class GameInteraction : MonoBehaviour
             foreach (GameLogic.Piece piece in place.pieces)
             {
                 Vector3 offset = Vector3.back * (currentPiece - centerOffset);
+
+                if (selectedPiece != null)
+                {
+                    if (selectedPiece.pieceInfo == piece)
+                    {
+                        offset += Vector3.up * 0.5f;
+                    }
+                }
+
                 if (piece.type == GameLogic.PieceType.Soldier)
                 {
                     if (piece.owner == GameLogic.PieceOwner.P1)
