@@ -47,9 +47,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayRandomSound(string clipName, int amount)
+    public void PlayRandomSound(string clipName, int amount, float volume = 1.0f, float pitch = 1.0f)
     {
-        PlaySound(clipName + Random.Range(1, amount + 1).ToString());
+        PlaySound(clipName + Random.Range(1, amount + 1).ToString(), volume, pitch);
     }
 
     public void PlaySound(string clipName, float volume = 1.0f, float pitch = 1.0f)

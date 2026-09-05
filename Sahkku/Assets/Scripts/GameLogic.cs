@@ -406,7 +406,7 @@ public class GameLogic : MonoBehaviour
         Debug.Log("Throw single die");
         dice[0] = RandomThrow();
         GameInteraction.Instance.RollDice(0);
-        AudioManager.Instance.PlayRandomSound("BircutOkta", 8);
+        AudioManager.Instance.PlayRandomSound("BircutOkta", 8, 0.5f);
     }
 
     void ThrowAllDice()
@@ -417,7 +417,7 @@ public class GameLogic : MonoBehaviour
             dice[i] = RandomThrow();
             GameInteraction.Instance.RollDice(i);
         }
-        AudioManager.Instance.PlayRandomSound("BircutGolbma", 13);
+        AudioManager.Instance.PlayRandomSound("BircutGolbma", 13, 0.5f);
     }
 
     D4 RandomThrow()
