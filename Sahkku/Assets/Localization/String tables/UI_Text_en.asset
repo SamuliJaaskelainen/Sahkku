@@ -114,6 +114,18 @@ MonoBehaviour:
     m_Localized: Audio
     m_Metadata:
       m_Items: []
+  - m_Id: 463080164843520
+    m_Localized: Toggle fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463532445032448
+    m_Localized: Sounds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463750095855616
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
