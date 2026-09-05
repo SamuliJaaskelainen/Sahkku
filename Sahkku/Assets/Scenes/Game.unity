@@ -1716,6 +1716,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5d76eb576cc6044bd90fa044b24416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundPlayer
+--- !u!1 &1863442571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3036899276493791246, guid: 6c5beb7567bb99341b115ff33810e4f4, type: 3}
+  m_PrefabInstance: {fileID: 1884996764}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1863442574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863442571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6c405fd0898b74faead20a3d492b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShowInSinglePlayer
 --- !u!1001 &1884996764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1771,7 +1788,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3036899276493791246, guid: 6c5beb7567bb99341b115ff33810e4f4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1863442574}
   m_SourcePrefab: {fileID: 100100000, guid: 6c5beb7567bb99341b115ff33810e4f4, type: 3}
 --- !u!1 &2013224655
 GameObject:

@@ -36,6 +36,7 @@ public class MenuManager : MonoBehaviour
     public void ToggleOdds()
     {
         GameSettings.evenOdds = oddToggle.isOn;
+        Debug.Log("Even odds: " + GameSettings.evenOdds);
     }
 
     public void ShowMainMenu()

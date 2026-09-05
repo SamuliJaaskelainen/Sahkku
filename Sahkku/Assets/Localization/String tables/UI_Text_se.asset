@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25199492042752
-    m_Localized: Speallat okta
+    m_Localized: Speallat okto
     m_Metadata:
       m_Items: []
   - m_Id: 88006333927424
@@ -112,6 +112,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 421271100035072
     m_Localized: Jietna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463080164843520
+    m_Localized: "Olles \u0161earbma"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463532445032448
+    m_Localized: Jienat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463750095855616
+    m_Localized: Musihkka
     m_Metadata:
       m_Items: []
   references:

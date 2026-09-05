@@ -114,6 +114,18 @@ MonoBehaviour:
     m_Localized: "\xC4\xE4ni"
     m_Metadata:
       m_Items: []
+  - m_Id: 463080164843520
+    m_Localized: Vaihda ikkunan kokoa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463532445032448
+    m_Localized: "\xC4\xE4net"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 463750095855616
+    m_Localized: Musiikki
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
