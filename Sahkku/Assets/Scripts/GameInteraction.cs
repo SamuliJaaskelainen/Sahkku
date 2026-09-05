@@ -175,7 +175,7 @@ public class GameInteraction : MonoBehaviour
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            SceneManager.LoadScene("MainMenu");
+            BackToMainMenu();
         }
 
         if(Mouse.current.leftButton.wasPressedThisFrame)
@@ -207,6 +207,11 @@ public class GameInteraction : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void UpdatePieces()

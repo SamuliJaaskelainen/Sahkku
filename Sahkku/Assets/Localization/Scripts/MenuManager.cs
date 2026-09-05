@@ -57,6 +57,18 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void ToggleFullScreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+    }
+
+    public void OpenRules()
+    {
+        string rulesPath = Application.dataPath + "/../Rules.pdf";
+        Debug.Log("Opening " + rulesPath);
+        Application.OpenURL(rulesPath);
+    }
+
     public void QuitGame()
     {
 #if UNITY_EDITOR

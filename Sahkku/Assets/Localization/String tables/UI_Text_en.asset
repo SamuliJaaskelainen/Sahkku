@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 86541167071232
-    m_Localized: Play versus
+    m_Localized: Versus
     m_Metadata:
       m_Items: []
   - m_Id: 88006333927424
@@ -68,6 +68,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 98920684687360
     m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 355758495129600
+    m_Localized: Rules
+    m_Metadata:
+      m_Items: []
+  - m_Id: 359107659456512
+    m_Localized: Roll
     m_Metadata:
       m_Items: []
   references:
