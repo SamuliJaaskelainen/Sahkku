@@ -193,7 +193,7 @@ public class GameInteraction : MonoBehaviour
             BackToMainMenu();
         }
 
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame && (GameLogic.Instance.turnPhase == TurnPhase.P1move || GameLogic.Instance.turnPhase == TurnPhase.P2move))
         {
             RaycastHit hit;
             Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -205,12 +205,15 @@ public class GameInteraction : MonoBehaviour
 
                 if (data != null)
                 {
-                    selectedPiece = data;
-                    UpdatePieces();
-                    for (int i = 0; i < places.Count; ++i)
+                    if (data.pieceInfo.IsSelectable())
                     {
-                        bool isValidPlace = data.pieceInfo.allowedPlaces.Contains(i);
-                        places[i].SetActive(isValidPlace);
+                        selectedPiece = data;
+                        UpdatePieces();
+                        for (int i = 0; i < places.Count; ++i)
+                        {
+                            bool isValidPlace = data.pieceInfo.allowedPlaces.Contains(i);
+                            places[i].SetActive(isValidPlace);
+                        }
                     }
                 }
                 else if(hit.transform.tag == "Place")
