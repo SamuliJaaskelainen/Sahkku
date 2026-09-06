@@ -55,6 +55,8 @@ public class GameInteraction : MonoBehaviour
 
     public Vector2 boardScalar = new Vector2(1.0f, 1.0f);
 
+    InputAction clickTouchAction;
+
     Vector3 GetScaledBoardPosition(int x, int y)
     {
         return new Vector3(x * boardScalar.x, 0.0f, y * boardScalar.y);
@@ -67,6 +69,10 @@ public class GameInteraction : MonoBehaviour
 
     void Start()
     {
+
+        clickTouchAction = InputSystem.actions.FindAction("Attack");
+        clickTouchAction.performed += contxt => OnClick();
+
         p1MaterialIndex = (int)GameSettings.p1Model;
         p2MaterialIndex = (int)GameSettings.p2Model;
         kingMaterialIndex = (int)GameSettings.kingModel;
@@ -112,6 +118,7 @@ public class GameInteraction : MonoBehaviour
         dice.Add(Instantiate(dicePrefab, diePos3.transform.position, Quaternion.identity));
 
         UpdatePieces();
+
     }
 
     void Update()
@@ -193,10 +200,23 @@ public class GameInteraction : MonoBehaviour
             BackToMainMenu();
         }
 
-        if(Mouse.current.leftButton.wasPressedThisFrame && (GameLogic.Instance.turnPhase == TurnPhase.P1move || GameLogic.Instance.turnPhase == TurnPhase.P2move))
+
+
+        // Handle click and touch -- Jenna
+        
+
+    }
+
+    public void OnClick()
+    
+    {
+        if(GameLogic.Instance.turnPhase == TurnPhase.P1move || GameLogic.Instance.turnPhase == TurnPhase.P2move)
         {
             RaycastHit hit;
-            Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+   
+            //Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Ray ray = camera.ScreenPointToRay(clickTouchAction.ReadValue<Vector2>());
+
             if(Physics.Raycast(ray, out hit, 1000.0f, GameLogic.Instance.GetCurrentPlayer() == GameLogic.PieceOwner.P1 ? p1mask : p2mask))
             {
                 Debug.Log("Press: " + hit.transform.name, hit.transform.gameObject);
@@ -379,3 +399,4 @@ public class GameInteraction : MonoBehaviour
         }
     }
 }
+

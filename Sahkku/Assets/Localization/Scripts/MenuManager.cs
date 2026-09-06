@@ -75,7 +75,9 @@ public class MenuManager : MonoBehaviour
 
     public void OpenRules()
     {
-        string rulesPath = Application.dataPath + "/../Rules.pdf";
+        //string rulesPath = Application.dataPath + "/../Rules.pdf";
+        // For web
+        string rulesPath = "https://drive.google.com/file/d/1mYRtsnpy8jDRwcyAH5xhNNKy4R4C2L-i/view?usp=sharing";
         Debug.Log("Opening " + rulesPath);
         Application.OpenURL(rulesPath);
     }
