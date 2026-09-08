@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using static GameLogic;
@@ -193,11 +194,26 @@ public class GameInteraction : MonoBehaviour
             BackToMainMenu();
         }
 
-        if(Mouse.current.leftButton.wasPressedThisFrame && (GameLogic.Instance.turnPhase == TurnPhase.P1move || GameLogic.Instance.turnPhase == TurnPhase.P2move))
+        bool ìnteractionThisFrame = false;
+        Vector2 interactionPosition = Vector2.zero;
+        if(Touchscreen.current != null)
         {
-            RaycastHit hit;
-            Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if(Physics.Raycast(ray, out hit, 1000.0f, GameLogic.Instance.GetCurrentPlayer() == GameLogic.PieceOwner.P1 ? p1mask : p2mask))
+            if (Touchscreen.current.touches.Count > 0)
+            {
+                ìnteractionThisFrame = Touchscreen.current.touches[0].press.wasPressedThisFrame;
+                interactionPosition = Touchscreen.current.touches[0].position.ReadValue();
+            }
+        }
+        else if (Mouse.current != null)
+        {
+            ìnteractionThisFrame = Mouse.current.leftButton.wasPressedThisFrame;
+            interactionPosition = Mouse.current.position.ReadValue();
+        }
+
+        if (ìnteractionThisFrame && (GameLogic.Instance.turnPhase == TurnPhase.P1move || GameLogic.Instance.turnPhase == TurnPhase.P2move))
+        {
+            Ray ray = camera.ScreenPointToRay(interactionPosition);
+            if(Physics.Raycast(ray, out RaycastHit hit, 1000.0f, GameLogic.Instance.GetCurrentPlayer() == GameLogic.PieceOwner.P1 ? p1mask : p2mask))
             {
                 Debug.Log("Press: " + hit.transform.name, hit.transform.gameObject);
 
